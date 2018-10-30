@@ -1,0 +1,126 @@
+﻿@*@model List<ListaProdutoViewModel>
+@model List<ListaPaisViewModel>
+
+@{
+    Html.RenderAction("ListarProduto", "Home", new { lista = Model });
+}
+
+<div class="row">
+    <fieldset>
+        <h2>Cascateamento de Combos</h2>
+        <div class="col-md-4">
+            <div class="editor-label">Países:</div>
+            <div class="editor-field">
+                @Html.DropDownList("cmb_pais", new SelectList(Model, "Id", "Nome"))
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div id="div_estado_ok" style="display: none">
+                <div class="editor-label">Estados:</div>
+                <div class="editor-field">
+                    @Html.DropDownList("cmb_estado", new SelectList(Enumerable.Empty<SelectList>(), "Id", "Nome"))
+                </div>
+            </div>
+            <div id="div_estado_busca" style="display: none">
+                <i class="fa fa-2x fa-spin fa-spinner"></i> Carregando...
+            </div>
+            <div id="div_estado_vazio" style="display: none">Sem informações.</div>
+        </div>
+        <div class="col-md-4">
+            <div id="div_cidade_ok" style="display: none">
+                <div class="editor-label">Cidades:</div>
+                <div class="editor-field">
+                    @Html.DropDownList("cmb_cidade", new SelectList(Enumerable.Empty<SelectList>(), "Id", "Nome"))
+                </div>
+            </div>
+            <div id="div_cidade_busca" style="display: none">
+                <i class="fa fa-2x fa-spin fa-spinner"></i> Carregando...
+            </div>
+            <div id="div_cidade_vazio" style="display: none">Sem informações.</div>
+        </div>
+    </fieldset>
+</div>
+
+<div style="text-align:center">
+    <a id="carregarMais" class="btn btn-primary" role="button" data-loading-text="<i class='fa fa-spin fa-spinner'</i>">Carregar Mais</a>
+</div>
+
+<script>
+    $(document).ready(function () {
+        var bloco = 2;
+        var clicou = false;
+        var ultimoBloco = false;
+        $('#carregarMais').click(function () {
+            if (!ultimoBloco && !clicou) {
+                clicou = true;
+                var btn = $(this);
+                btn.button('loading');
+                $.post('@Url.Action("CarregarBlocoProduto", "Home")', { 'bloco': bloco }, function (data) {
+                    bloco++;
+                    ultimoBloco = data.UltimoBloco;
+                    $('#listaProduto').append(data.Html);
+                    btn.button('reset');
+                    clicou = false;
+                    if (ultimoBloco) {
+                        setTimeout(function () {
+                            btn.addClass('disabled');
+                        }, 0);
+                    }
+                });
+            }
+        });
+
+        $('#cmb_pais').change(function () {
+            var idPais = $('#cmb_pais').val();
+            if (idPais > 0) {
+                $('#div_estado_ok').hide();
+                $('#div_estado_busca').show();
+                $('#div_estado_vazio').hide();
+                $('#div_cidade_ok').hide();
+                $('#div_cidade_busca').hide();
+                $('#div_cidade_vazio').hide();
+                $('#cmb_pais').prop('disabled', true);
+                $.post('@Url.Action("ObterEstados", "Home")', { 'idPais': idPais }, function (data) {
+                    $('#div_estado_busca').hide();
+                    if (data.length > 0) {
+                        $('#div_estado_ok').show();
+                        $('#cmb_estado').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $('#cmb_estado').append('<option value="' + data[i].Id + '">' + data[i].Nome + '</option>');
+                        }
+                    }
+                    else {
+                        $('#div_estado_vazio').show();
+                    }
+                    $('#cmb_pais').prop('disabled', false);
+                });
+            }
+        });
+
+        $('#cmb_estado').change(function () {
+            var idEstado = $('#cmb_estado').val();
+            $('#div_cidade_ok').hide();
+            $('#div_cidade_busca').show();
+            $('#div_cidade_vazio').hide();
+            if (idEstado > 0) {
+                $('#cmb_pais').prop('disabled', true);
+                $('#cmb_estado').prop('disabled', true);
+                $.post('@Url.Action("ObterCidades", "Home")', { 'idEstado': idEstado }, function (data) {
+                    $('#div_cidade_ok').show();
+                    if (data.length > 0) {
+                        $('#div_cidade_busca').hide();
+                        $('#cmb_cidade').empty();
+                        for (var i = 0; i < data.length; i++) {
+                            $('#cmb_cidade').append('<option value="' + data[i].Id + '">' + data[i].Nome + '</option>');
+                        }
+                    }
+                    else {
+                        $('#div_cidade_vazio').show();   
+                    }
+                    $('#cmb_pais').prop('disabled', false);
+                    $('#cmb_estado').prop('disabled', false);
+                });
+            }
+        });
+    });
+</script>*@

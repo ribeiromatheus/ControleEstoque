@@ -1,0 +1,20 @@
+﻿<div id="listaProduto" class="row">
+    @{
+        if (Model != null && Model.Count > 0)
+        {
+            foreach (var prod in Model)
+            {
+                <div class="col-md-6">
+                    <h2>@prod.Nome</h2>
+                    <p>@prod.Preco.ToString("C")</p>
+                </div>
+            }
+        }
+        else
+        {
+            <div style="text-align:center">
+                <p>Nenhum produto cadastrado.</p>
+            </div>
+        }
+    }
+</div>

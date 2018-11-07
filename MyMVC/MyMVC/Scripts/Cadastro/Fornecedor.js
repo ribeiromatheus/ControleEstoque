@@ -160,6 +160,7 @@ $(document)
     .ready(function () {
         $('#txt_telefone').mask('(00) 0000-0000');
         $('#txt_cep').mask('00000-000');
+        $('#txt_logradouro').prop('disabled', true);
     })
     .on('click', '#rbtn_pessoa_juridica', function () {
         $('label[for="txt_num_documento"]').text('CNPJ');
@@ -176,4 +177,22 @@ $(document)
     })
     .on('change', '#ddl_estado', function () {
         mudar_estado();
+    })
+    .on('blur', '#txt_cep', function () {
+        var txt_cep = $('#txt_cep').val(),
+            url = url_busca_cep,
+            param = { 'cep': txt_cep };
+
+        if (!txt_cep) {
+            swal('Aviso', 'Digite o CEP.', 'warning');
+        } else {
+            $.post(url, param, function (response) {
+                if (response) {
+                    $('#txt_logradouro').val(response.Logradouro);
+                }
+            })
+                .fail(function () {
+                    swal('Aviso', 'Não foi possível encontrar o CEP.', 'warning');
+                })
+        }
     });

@@ -65,6 +65,16 @@ namespace MyMVC.Controllers
         }
 
         [HttpPost]
+        public JsonResult BuscaCep(string cep)
+        {
+            var ws = new ServicesCorreios.AtendeClienteClient();
+            var buscaCep = ws.consultaCEP(cep);
+            var logradouro = buscaCep.end;
+            
+            return Json(new { Cep = cep, Logradouro = logradouro });
+        }
+
+        [HttpPost]
         [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
         public JsonResult ExcluirFornecedor(int id)

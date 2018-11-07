@@ -100,23 +100,24 @@
                 <div class="panel-heading">Endereço</div>
                 <div class="panel-body">
                     <div class="row">
+                        <div class="col-md-3">
+                            @Html.Label("txt_cep", "CEP", new { @class = "form-check-label" })
+                            @Html.TextBox("txt_cep", null, new { @class = "form-control" })
+
+                        </div>
                         <div class="col-md-9">
                             @Html.Label("txt_logradouro", "Logradouro", new { @class = "form-check-label" })
                             @Html.TextBox("txt_logradouro", null, new { @class = "form-control" })
                         </div>
+                    </div>
+                    <div class="row">
                         <div class="col-md-3">
                             @Html.Label("txt_numero", "Número", new { @class = "form-check-label" })
                             @Html.TextBox("txt_numero", null, new { @class = "form-control" })
                         </div>
-                    </div>
-                    <div class="row">
                         <div class="col-md-9">
                             @Html.Label("txt_complemento", "Complemento", new { @class = "form-check-label" })
                             @Html.TextBox("txt_complemento", null, new { @class = "form-control" })
-                        </div>
-                        <div class="col-md-3">
-                            @Html.Label("txt_cep", "CEP", new { @class = "form-check-label" })
-                            @Html.TextBox("txt_cep", null, new { @class = "form-control" })
                         </div>
                     </div>
                     <div class="row">
@@ -164,15 +165,16 @@
         var url_filtro_change = '@Url.Action("FornecedorPagina", "cadFornecedor")';
         var url_listar_estados = '@Url.Action("RecuperarEstadoDoPais", "cadEstado")';
         var url_listar_cidades = '@Url.Action("RecuperarCidadesDoEstado", "cadCidade")';
+        var url_busca_cep = '@Url.Action("BuscaCep", "cadFornecedor")';
         var linhas = [];
 
         @{
-                        var linha = 0;
-                        foreach (var item in Model)
-                        {
-                            linha++;
-                            if (linha <= ViewBag.QuantMaxLinhasPorPagina)
-                            {
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
                     @:linhas.push(@Html.Raw(Json.Encode(item)));
                 }
                 else

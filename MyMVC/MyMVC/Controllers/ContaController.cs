@@ -184,19 +184,6 @@ namespace MyMVC.Controllers
 
         }
 
-        // Relatórios
-        [Authorize]
-        public ActionResult PosicaoEstoque()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Ressuprimento()
-        {
-            return View();
-        }
-
         // Gráficos
         [Authorize]
         public ActionResult PerdaMes()

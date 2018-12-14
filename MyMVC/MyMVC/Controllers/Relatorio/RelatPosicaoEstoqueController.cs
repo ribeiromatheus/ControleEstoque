@@ -12,17 +12,5 @@ namespace MyMVC.Controllers
             var estoque = ProdutoModel.RecuperarRelatPosicaoEstoque();
             return new ViewAsPdf("~/Views/Relatorio/RelatPosicaoEstoqueView.cshtml", estoque);
         }
-
-        [Authorize]
-        public ActionResult PosicaoEstoque()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult Ressuprimento()
-        {
-            return View();
-        }
     }
 }

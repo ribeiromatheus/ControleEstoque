@@ -159,7 +159,6 @@ namespace MyMVC.Models
                 {
                     var fornecedor = new FornecedorModel { Id = id };
                     db.Fornecedores.Attach(fornecedor);
-                    db.Fornecedores.Attach(fornecedor);
                     db.Entry(fornecedor).State = EntityState.Deleted;
                     ret = true;
                 }

@@ -184,7 +184,7 @@ $(document)
             param = { 'cep': txt_cep };
 
         if (!txt_cep) {
-            swal('Aviso', 'Digite o CEP.', 'warning');
+            return null;
         } else {
             $.post(url, param, function (response) {
                 if (response) {

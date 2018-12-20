@@ -101,12 +101,12 @@
                 <div class="panel-body">
                     <div class="row">
                         <div class="col-md-3">
-                            @Html.Label("txt_cep", "CEP", new { @class = "form-check-label" })
+                            @Html.Label("txt_cep", "CEP", new { @class = "control-label" })
                             @Html.TextBox("txt_cep", null, new { @class = "form-control" })
-
                         </div>
                         <div class="col-md-9">
                             @Html.Label("txt_logradouro", "Logradouro", new { @class = "form-check-label" })
+                            &nbsp;<span id="loader" class="invisivel control-label"><i class="fa fa-2x fa-spin fa-spinner"></i> Buscando CEP...</span>
                             @Html.TextBox("txt_logradouro", null, new { @class = "form-control" })
                         </div>
                     </div>

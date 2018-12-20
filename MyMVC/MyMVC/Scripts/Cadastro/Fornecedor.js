@@ -181,18 +181,28 @@ $(document)
     .on('blur', '#txt_cep', function () {
         var txt_cep = $('#txt_cep').val(),
             url = url_busca_cep,
-            param = { 'cep': txt_cep };
+            param = { 'cep': txt_cep },
+            loader = $('#loader');
 
         if (!txt_cep) {
             return null;
         } else {
-            $.post(url, param, function (response) {
-                if (response) {
+            $.ajax({
+                type: "POST",
+                data: add_anti_forgery_token(param),
+                url: url,
+                dataType: "json",
+                beforeSend: function () {
+                    loader.removeClass('invisivel');
+                },
+                success: function (response) {
                     $('#txt_logradouro').val(response.Logradouro);
-                }
-            })
-                .fail(function () {
+                    loader.addClass('invisivel');
+                },
+                error: function () {
                     swal('Aviso', 'Não foi possível encontrar o CEP.', 'warning');
-                })
+                    loader.addClass('invisivel');
+                }
+            });
         }
     });

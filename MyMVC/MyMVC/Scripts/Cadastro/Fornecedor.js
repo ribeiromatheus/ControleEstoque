@@ -193,11 +193,19 @@ $(document)
                 url: url,
                 dataType: "json",
                 beforeSend: function () {
-                    loader.removeClass('invisivel');
+                    swal({
+                        text: 'Buscando CEP...',
+                        type: 'info',
+                        allowEscapeKey: false,
+                        allowOutsideClick: false,
+                        onBeforeOpen: () => {
+                            swal.showLoading();
+                        }
+                    });
                 },
                 success: function (response) {
                     $('#txt_logradouro').val(response.Logradouro);
-                    loader.addClass('invisivel');
+                    swal.close();
                 },
                 error: function () {
                     swal('Aviso', 'Não foi possível encontrar o CEP.', 'warning');

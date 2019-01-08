@@ -181,8 +181,7 @@ $(document)
     .on('blur', '#txt_cep', function () {
         var txt_cep = $('#txt_cep').val(),
             url = url_busca_cep,
-            param = { 'cep': txt_cep },
-            loader = $('#loader');
+            param = { 'cep': txt_cep };
 
         if (!txt_cep) {
             return null;

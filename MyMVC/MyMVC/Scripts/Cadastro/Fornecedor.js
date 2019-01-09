@@ -208,7 +208,6 @@ $(document)
                 },
                 error: function () {
                     swal('Aviso', 'Não foi possível encontrar o CEP.', 'warning');
-                    loader.addClass('invisivel');
                 }
             });
         }

@@ -184,7 +184,7 @@ $(document)
             param = { 'cep': txt_cep };
 
         if (!txt_cep) {
-            return null;
+            return;
         } else {
             $.ajax({
                 type: "POST",

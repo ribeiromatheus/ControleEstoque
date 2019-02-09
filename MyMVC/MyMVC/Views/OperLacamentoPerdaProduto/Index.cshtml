@@ -2,27 +2,9 @@
     ViewBag.Title = "Lançamento de Perda de Produtos";
 }
 
-<style>
-    #grid th:nth-child(1) {
-        width: 50px;
-    }
-
-    #grid th:nth-child(2) {
-        width: 200px;
-    }
-
-    #grid th:nth-child(3) {
-        width: 130px;
-    }
-
-    #grid th:nth-child(4) {
-        width: 130px;
-    }
-
-    #grid th:nth-child(5) {
-        width: auto;
-    }
-</style>
+@section Styles {
+    <link href="~/Content/Operacao/LancamentoPerdaProdutos.css" rel="stylesheet" />
+}
 
 <div class="row">
     <div class="col-md-12" style="margin: 15px;">
@@ -67,6 +49,11 @@
     <script src="~/Scripts/comum.js"></script>
     <script src="~/Scripts/sweetalert2.min.js"></script>
     <script src="~/Scripts/mustache.min.js"></script>
+    <script src="~/Scripts/Operacao/LancamentoPerdaProduto.js"></script>
+    <script>
+        var url_recuperar_lista_produto_diferenca_inventario = '@Url.Action("RecuperarListaProdutoComDiferencaEmInventario", "OperLacamentoPerdaProduto")?inventario=',
+            url_salvar = '@Url.Action("Salvar", "OperLacamentoPerdaProduto")';
+    </script>
     <script id="template-grid" type="x-tmpl-mustache">
         <tr data-id="{{ Id }}">
             <td>{{ CodigoProduto }}</td>
@@ -75,103 +62,5 @@
             <td>{{ QuantidadeInventario }}</td>
             <td><input type="text" class="form-control" value="{{ Motivo }}" /></td>
         </tr>
-    </script>
-    <script>
-        function preencher_tela() {
-            var id_inventario = $('#ddl_inventario').val(),
-                url = '@Url.Action("RecuperarListaProdutoComDiferencaEmInventario", "OperLacamentoPerdaProduto")?inventario=' + id_inventario,
-                grid = $('#grid').find('tbody');
-
-            grid.empty();
-
-            $.ajax({
-                type: 'GET',
-                processData: false,
-                url: url,
-                dataType: 'json',
-                success: function (response) {
-                    if (response) {
-                        for (var i = 0; i < response.length; i++) {
-                            grid.append(criar_linha_grid(response[i]));
-                        }
-                    }
-                    else {
-                        swal('Aviso', 'Não foi possível recuperar os produtos do invetário.', 'warning');
-                    }
-                },
-                error: function () {
-                    swal('Aviso', 'Não foi possível recuperar os produtos do invetário.', 'warning');
-                }
-            });
-        }
-
-        function criar_linha_grid(dados) {
-            var template = $('#template-grid').html();
-            return Mustache.render(template, dados);
-        }
-
-
-        function obter_dados() {
-            var ret = [];
-
-            $('#grid tbody tr').each(function (index, item) {
-                var tr = $(item),
-                    id = tr.attr('data-id'),
-                    motivo = tr.find('input[type=text]').val();
-
-                if (motivo != '') {
-                    ret.push({ Id: id, Motivo: motivo });
-                }
-            });
-            return ret;
-        }
-
-        function verificar_preenchimento() {
-            var ret = false;
-
-            $('#grid tbody tr input[type=text]').each(function (index, item) {
-                if ($(item).val() != '') {
-                    ret = true;
-                    return false
-                }
-            });
-            return ret;
-        }
-
-        $(document).ready(function () {
-            preencher_tela();
-        })
-        .on('change', '#ddl_inventario', function () {
-            preencher_tela();
-        })
-        .on('click', '#btn_salvar', function () {
-            if (!verificar_preenchimento()) {
-                swal('Aviso', 'Para salvar, você deve preencher algum motivo.', 'warning');
-            }
-            else {
-                var url = '@Url.Action("Salvar", "OperLacamentoPerdaProduto")',
-                    dados = { dados: obter_dados() };
-
-                $.ajax({
-                    type: 'POST',
-                    processData: false,
-                    contentType: 'application/json',
-                    data: JSON.stringify(add_anti_forgery_token(dados)),
-                    url: url,
-                    dataType: 'json',
-                    success: function (response) {
-                        if (response) {
-                            swal('Aviso', 'Lançamento de perdas salvo com sucesso.', 'info');
-                        }
-                        else {
-                            swal('Aviso', 'Não foi possível salvar os lançamentos de perdas de produtos.', 'warning');
-                        }
-                    },
-                    error: function () {
-                        swal('Aviso', 'Não foi possível salvar os lançamentos de perdas de produtos.', 'warning');
-                    }
-                });
-            }
-        })
     </script>
 }

@@ -1,0 +1,23 @@
+﻿tr {
+    page-break-inside: avoid;
+}
+
+table th:nth-child(1) {
+    width: 10%;
+}
+
+table td:nth-child(1) {
+    text-align: right;
+}
+
+table td:nth-child(2) {
+    text-align: left;
+}
+
+table th:nth-child(3) {
+    width: 10%;
+}
+
+table td:nth-child(3) {
+    text-align: right;
+}

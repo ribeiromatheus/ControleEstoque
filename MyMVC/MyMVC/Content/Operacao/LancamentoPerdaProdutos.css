@@ -1,0 +1,19 @@
+﻿#grid th:nth-child(1) {
+    width: 50px;
+}
+
+#grid th:nth-child(2) {
+    width: 200px;
+}
+
+#grid th:nth-child(3) {
+    width: 130px;
+}
+
+#grid th:nth-child(4) {
+    width: 130px;
+}
+
+#grid th:nth-child(5) {
+    width: auto;
+}

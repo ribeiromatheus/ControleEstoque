@@ -1,0 +1,11 @@
+﻿#grid th:nth-child(2) {
+    width: 150px;
+}
+
+#grid th:nth-child(3) {
+    width: 70px;
+}
+
+#entrada_produtos .row {
+    margin: 15px 0;
+}

@@ -413,6 +413,12 @@
     <Content Include="Content\Cadastro\Produto.css" />
     <Content Include="Content\font-awesome.css" />
     <Content Include="Content\font-awesome.min.css" />
+    <Content Include="Content\Operacao\EntradaProduto.css" />
+    <Content Include="Content\Operacao\Inventario.css" />
+    <Content Include="Content\Operacao\LancamentoPerdaProdutos.css" />
+    <Content Include="Content\Operacao\SaidaProduto.css" />
+    <Content Include="Content\Relatorio\RelatorioPosicaoEstoque.css" />
+    <Content Include="Content\Relatorio\RelatorioRessuprimento.css" />
     <Content Include="fonts\fontawesome-webfont.svg" />
     <Content Include="Rotativa\wkhtmltopdf.exe" />
     <Content Include="Scripts\Cadastro\Produto.js" />
@@ -469,6 +475,10 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\mustache.js" />
     <Content Include="Scripts\mustache.min.js" />
+    <Content Include="Scripts\Operacao\EntradaProduto.js" />
+    <Content Include="Scripts\Operacao\Inventario.js" />
+    <Content Include="Scripts\Operacao\LancamentoPerdaProduto.js" />
+    <Content Include="Scripts\Operacao\SaidaProduto.js" />
     <Content Include="Scripts\respond.js" />
     <Content Include="Scripts\respond.min.js" />
     <Content Include="Scripts\sweetalert2.min.js" />
@@ -561,7 +571,7 @@
     <VisualStudio>
       <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
         <WebProjectProperties>
-          <UseIIS>True</UseIIS>
+          <UseIIS>False</UseIIS>
           <AutoAssignPort>True</AutoAssignPort>
           <DevelopmentServerPort>60113</DevelopmentServerPort>
           <DevelopmentServerVPath>/</DevelopmentServerVPath>

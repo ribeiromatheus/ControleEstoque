@@ -1,0 +1,199 @@
+﻿@model  List<ControleEstoque.Web.Models.FornecedorViewModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Fornecedores";
+    ViewBag.Lista = Model;
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Fornecedor.css" rel="stylesheet" />
+    <style>
+        .dialogo > .modal-dialog {
+            width: 700px !important;
+        }
+
+        .modal-body {
+            height: 550px;
+            overflow-y: scroll;
+        }
+    </style>
+}
+
+@section TituloGrid {
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th><span class="coluna-ordenacao" data-campo="telefone">Telefone</span></th>
+    <th><span class="coluna-ordenacao" data-campo="contato">Contato</span></th>
+    <th><span class="coluna-ordenacao" data-campo="ativo">Ativo</span></th>
+    <th>Ação</th>
+}
+
+@*@section LinhaGrid {
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    var ativo = (item.Ativo ? "SIM" : "NÃO");
+
+                    <tr data-id="@item.Id">
+                        <td>@item.Nome</td>
+                        <td>@ativo</td>
+                        <td>
+                            <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                            <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }*@
+
+@section CamposCadastro {
+    <div class="row">
+        <div class="col-md-9">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-3" style="line-height: 2.2em">
+            <div class="form-check">
+                @Html.RadioButton("rbtn_pessoa", (int)ControleEstoque.Web.Models.TipoPessoa.Juridica, new { id = "rbtn_pessoa_juridica", @class = "form -check-input" })
+                @Html.Label("rbtn_pessoa_juridica", "Pessoa Jurídica", new { @class = "form-check-label" })
+            </div>
+            <div class="form-check">
+                @Html.RadioButton("rbtn_pessoa", (int)ControleEstoque.Web.Models.TipoPessoa.Fisica, new { id = "rbtn_pessoa_fisica", @class = "form-check-input" })
+                @Html.Label("rbtn_pessoa_fisica", "Pessoa Física", new { @class = "form-check-label" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.Label("txt_num_documento", "CPF/CNPJ", new { @class = "form-check-label" })
+            @Html.TextBox("txt_num_documento", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-8">
+            <div id="container_razao_social">
+                @Html.Label("txt_razao_social", "Razão Social", new { @class = "form-check-label" })
+                @Html.TextBox("txt_razao_social", null, new { @class = "form-control" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            @Html.Label("txt_telefone", "Telefone", new { @class = "form-check-label" })
+            @Html.TextBox("txt_telefone", null, new { @class = "form-control" })
+        </div>
+        <div class="col-md-8">
+            @Html.Label("txt_contato", "Contato", new { @class = "form-check-label" })
+            @Html.TextBox("txt_contato", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row" style="margin-top: 15px">
+        <div class="col-md-12">
+            <div class="panel panel-info">
+                <div class="panel-heading">Endereço</div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.Label("txt_cep", "CEP", new { @class = "control-label" })
+                            @Html.TextBox("txt_cep", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.Label("txt_logradouro", "Logradouro", new { @class = "form-check-label" })
+                            @Html.TextBox("txt_logradouro", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-3">
+                            @Html.Label("txt_numero", "Número", new { @class = "form-check-label" })
+                            @Html.TextBox("txt_numero", null, new { @class = "form-control" })
+                        </div>
+                        <div class="col-md-9">
+                            @Html.Label("txt_complemento", "Complemento", new { @class = "form-check-label" })
+                            @Html.TextBox("txt_complemento", null, new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Label("ddl_pais", "País", new { @class = "col-md-3 control-label" })
+                            @Html.DropDownList("ddl_pais", new SelectList(ViewBag.Paises, "Id", "Nome"), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Label("ddl_estado", "Estado", new { @class = "col-md-3 control-label" })
+                            @Html.DropDownList("ddl_estado", new SelectList(""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @Html.Label("ddl_cidade", "Cidade", new { @class = "col-md-3 control-label" })
+                            @Html.DropDownList("ddl_cidade", new SelectList(""), new { @class = "form-control" })
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-check">
+                @Html.CheckBox("cbx_ativo", new { @class = "form-check-input" })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = "form-check-label" })
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script src="~/Scripts/jquery.mask.min.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+        var url_alterar = '@Url.Action("RecuperarFornecedor", "cadFornecedor")';
+        var url_excluir = '@Url.Action("ExcluirFornecedor", "cadFornecedor")';
+        var url_confirmar = '@Url.Action("SalvarFornecedor", "cadFornecedor")';
+        var url_page_click = '@Url.Action("FornecedorPagina", "cadFornecedor")';
+        var url_tam_pag_change = '@Url.Action("FornecedorPagina", "cadFornecedor")';
+        var url_filtro_change = '@Url.Action("FornecedorPagina", "cadFornecedor")';
+        var url_listar_estados = '@Url.Action("RecuperarEstadoDoPais", "cadEstado")';
+        var url_listar_cidades = '@Url.Action("RecuperarCidadesDoEstado", "cadCidade")';
+        var url_busca_cep = '@Url.Action("BuscaCep", "cadFornecedor")';
+        var linhas = [];
+
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    @:linhas.push(@Html.Raw(Json.Encode(item)));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    </script>
+    <script src="~/Scripts/Cadastro/Fornecedor.js"></script>
+    <script id="template-grid" type="x-tmpl-mustache">
+        <tr data-id="{{ Id }}">
+            <td>{{ Nome }}</td>
+            <td>{{ Telefone }}</td>
+            <td>{{ Contato }}</td>
+            <td>{{ #Ativo }}SIM{{ /Ativo }}{{ ^Ativo }}NÃO{{ /Ativo }}</td>
+            <td>
+                <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+            </td>
+        </tr>
+    </script>
+}

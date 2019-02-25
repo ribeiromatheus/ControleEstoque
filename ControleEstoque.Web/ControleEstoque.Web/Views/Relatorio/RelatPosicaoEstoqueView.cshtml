@@ -1,0 +1,38 @@
+﻿@model List<ControleEstoque.Web.Models.RelatPosicaoEstoqueViewModel>
+@{
+    Layout = "";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width-device-width" />
+    <title>Posição no Estoque</title>
+    @Styles.Render("~/Content/css")
+    <link href="~/Content/Relatorio/RelatorioPosicaoEstoque.css" rel="stylesheet" />
+</head>
+<body>
+    <div class="col-md-12 text-center">
+        <img src="~/Content/Imagens/logo.png" style="height: 80px" />
+    </div>
+    <h3>Posição no Estoque</h3>
+    <table class="table table-striped">
+        <thead>
+            <tr>
+                <th>Código</th>
+                <th>Produto</th>
+                <th>Quantidade</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model)
+            {
+                <tr>
+                    <td>@item.CodigoProduto</td>
+                    <td>@item.NomeProduto</td>
+                    <td>@item.QuantidadeProduto</td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</body>
+</html>

@@ -1,0 +1,110 @@
+﻿@model  List<ControleEstoque.Web.Models.UsuarioViewModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Usuário";
+    ViewBag.Lista = Model;
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Usuario.css" rel="stylesheet" />
+}
+
+@section TituloGrid {
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th><span class="coluna-ordenacao" data-campo="login">Login</span></th>
+    <th>Ação</th>
+}
+
+@*@section LinhaGrid {
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    <tr data-id="@item.Id">
+                        <td>@item.Nome</td>
+                        <td>@item.Login</td>
+                        <td>
+                            <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                            <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }*@
+
+@section CamposCadastro {
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_email", "Email", new { @class = "control-label" })
+            @Html.TextBox("txt_email", null, new { @type = "email", @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_login", "Login", new { @class = "control-label" })
+            @Html.TextBox("txt_login", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_senha", "Senha", new { @class = "control-label" })
+            @Html.TextBox("txt_senha", null, new { @class = "form-control", type = "password" })
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+        var url_alterar = '@Url.Action("RecuperarUsuario", "cadUsuario")';
+        var url_excluir = '@Url.Action("ExcluirUsuario", "cadUsuario")';
+        var url_confirmar = '@Url.Action("SalvarUsuario", "cadUsuario")';
+        var url_page_click = '@Url.Action("UsuarioPagina", "cadUsuario")';
+        var url_tam_pag_change = '@Url.Action("UsuarioPagina", "cadUsuario")';
+        var url_filtro_change = '@Url.Action("UsuarioPagina", "cadUsuario")';
+        var linhas = [];
+
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    @:linhas.push(@Html.Raw(Json.Encode(item)));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    </script>
+    <script src="~/Scripts/Cadastro/Usuario.js"></script>
+    <script id="template-grid" type="x-tmpl-mustache">
+        <tr data-id="{{ Id }}">
+            <td>{{ Nome }}</td>
+            <td>{{ Login }}</td>
+            <td>
+                <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+            </td>
+        </tr>
+    </script>
+}

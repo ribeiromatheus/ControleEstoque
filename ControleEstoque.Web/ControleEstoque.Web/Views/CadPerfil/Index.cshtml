@@ -1,0 +1,121 @@
+﻿@model  List<ControleEstoque.Web.Models.PerfilViewModel>
+@{
+    Layout = "~/Views/Shared/_Cadastro.cshtml";
+    ViewBag.Title = "Perfis de Usuários";
+    ViewBag.Lista = Model;
+}
+
+@section Styles {
+    <link href="~/Content/bootstrap-select.css" rel="stylesheet" />
+    <link href="~/Content/Cadastro/Perfil.css" rel="stylesheet" />
+}
+
+@section TituloGrid {
+    <th><span class="coluna-ordenacao" data-campo="nome">Nome</span></th>
+    <th><span class="coluna-ordenacao" data-campo="ativo">Ativo</span></th>
+    <th>Ação</th>
+}
+
+@*@section LinhaGrid {
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    var ativo = (item.Ativo ? "SIM" : "NÃO");
+
+                    <tr data-id="@item.Id">
+                        <td>@item.Nome</td>
+                        <td>@ativo</td>
+                        <td>
+                            <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                            <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+                        </td>
+                    </tr>
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    }*@
+
+@section CamposCadastro {
+    <div class="row">
+        <div class="col-md-12">
+            @Html.Label("txt_nome", "Nome", new { @class = "control-label" })
+            @Html.TextBox("txt_nome", null, new { @class = "form-control" })
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-check" style="margin-top: 15px">
+                @Html.CheckBox("cbx_ativo", new { @class = "form-check-input" })
+                @Html.Label("cbx_ativo", "Ativo", new { @class = "form-check-label" })
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="form-group" style="margin: 0 10px 0 10px">
+            <div class="col-md-12">
+                <h4 class="text-center">Usuários</h4>
+                <div class="well" style="max-height: 300px; padding: 5px; margin: 0; overflow: auto">
+                    <ul id="lista_usuario" class="list-group checked-list-box" style="margin-bottom: 0">
+                        @foreach (var usuario in (List<ControleEstoque.Web.Models.UsuarioViewModel>)ViewBag.ListaUsuario)
+                        {
+                            <li class="list-group-item">
+                                <label style="margin-bottom: 0">
+                                    <input type="checkbox" data-id-usuario="@usuario.Id" /> @usuario.Nome
+                                </label>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <script src="~/Scripts/bootstrap-select.js"></script>
+    <script>
+        var tituloPagina = '@ViewBag.Title';
+        var url_excluir = '@Url.Action("ExcluirPerfil", "cadPerfil")';
+        var url_confirmar = '@Url.Action("SalvarPerfil", "cadPerfil")';
+        var url_page_click = '@Url.Action("PerfilPagina", "cadPerfil")';
+        var url_tam_pag_change = '@Url.Action("PerfilPagina", "cadPerfil")';
+        var url_filtro_change = '@Url.Action("PerfilPagina", "cadPerfil")';
+        var url_alterar = '@Url.Action("RecuperarPerfil", "cadPerfil")';
+        var linhas = [];
+
+        @{
+            var linha = 0;
+            foreach (var item in Model)
+            {
+                linha++;
+                if (linha <= ViewBag.QuantMaxLinhasPorPagina)
+                {
+                    @:linhas.push(@Html.Raw(Json.Encode(item)));
+                }
+                else
+                {
+                    break;
+                }
+            }
+        }
+    </script>
+    <script src="~/Scripts/Cadastro/Perfil.js"></script>
+    <script id="template-grid" type="x-tmpl-mustache">
+        <tr data-id="{{ Id }}">
+            <td>{{ Nome }}</td>
+            <td>{{ #Ativo }}SIM{{ /Ativo }}{{ ^Ativo }}NÃO{{ /Ativo }}</td>
+            <td>
+                <a class="btn btn-primary btn-alterar" role="button"><i class="glyphicon glyphicon-pencil"></i> Alterar</a>
+                <a class="btn btn-danger btn-excluir" role="button"><i class="glyphicon glyphicon-trash"></i> Excluir</a>
+            </td>
+        </tr>
+    </script>
+}

@@ -57,7 +57,8 @@ function mudar_pais(id_estado, id_cidade) {
                 for (var i = 0; i < response.length; i++) {
                     $(ddl_estado).append('<option value=' + response[i].Id + '>' + response[i].Nome + '</option>')
                 }
-                $(ddl_estado).prop('disabled', false)
+                $(ddl_estado).prop('disabled', false);
+                $(ddl_estado).find('option: eq(1)').prop('selected', true);
             }
             sel_estado(id_estado);
             mudar_estado(id_cidade);
@@ -82,7 +83,8 @@ function mudar_estado(id_cidade) {
                 for (var i = 0; i < response.length; i++) {
                     $(ddl_cidade).append('<option value=' + response[i].Id + '>' + response[i].Nome + '</option>')
                 }
-                $(ddl_cidade).prop('disabled', false)
+                $(ddl_cidade).prop('disabled', false);
+                $(ddl_cidade).find('option: eq(1)').prop('selected', true);
             }
             sel_cidade(id_cidade);
         });

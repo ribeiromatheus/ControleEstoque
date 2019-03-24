@@ -134,7 +134,7 @@ function get_dados_form() {
     return {
         Id: $('#id_cadastro').val(),
         Nome: $('#txt_nome').val(),
-        Tipo: $('#rbtn_pessoa_juridica').is('checked') ? 2 : 1,
+        Tipo: $('#rbtn_pessoa_juridica').is(':checked') ? 2 : 1,
         NumDocumento: $('#txt_num_documento').val(),
         RazaoSocial: $('#txt_razao_social').val(),
         Telefone: $('#txt_telefone').val(),
@@ -162,7 +162,6 @@ $(document)
     .ready(function () {
         $('#txt_telefone').mask('(00) 0000-0000');
         $('#txt_cep').mask('00000-000');
-        $('#txt_logradouro').prop('disabled', true);
     })
     .on('click', '#rbtn_pessoa_juridica', function () {
         $('label[for="txt_num_documento"]').text('CNPJ');

@@ -28,6 +28,7 @@ namespace ControleEstoque.Web
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
                       "~/Content/sweetalert2.min.css",
+                      "~/Content/font-awesome.min.css",
                       "~/Content/site.css"));
         }
     }

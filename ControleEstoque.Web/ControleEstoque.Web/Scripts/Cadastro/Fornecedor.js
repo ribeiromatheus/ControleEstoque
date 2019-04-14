@@ -11,7 +11,7 @@
     $('#txt_numero').val(dados.Numero);
     $('#txt_complemento').val(dados.Complemento);
     $('#txt_cep').val(dados.Cep);
-    $('#ddl_pais').val(dados.IdPais);
+    $('#ddl_pais option:eq(0)').val(dados.IdPais);
     $('#ddl_estado').val(dados.IdEstado);
     $('#ddl_cidade').val(dados.IdCidade);
     $('#cbx_ativo').prop('checked', dados.Ativo);

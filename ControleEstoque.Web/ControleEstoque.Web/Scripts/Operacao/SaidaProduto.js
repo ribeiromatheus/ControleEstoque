@@ -9,6 +9,7 @@ function formatar_data(data) {
 function incluir_linha_produto() {
     $('#grid tbody').append(Mustache.render($('#template-produto').html(), { Sequencia: sequencia }));
     sequencia++;
+    atualiza_quantidade_estoque('select[id^="ddl_produto_"]');
 }
 
 function limpar_tela() {
@@ -37,6 +38,24 @@ function obter_lista_saidas() {
     });
 
     return ret;
+}
+
+function atualiza_quantidade_estoque(this_select) {
+    var url = url_recuperar_quantidade_estoque_produto,
+        ddl = $(this_select),
+        div_quant_estoque = ddl.closest('tr').find('td[class="quant-estoque"]'),
+        dados = {
+            id: parseInt(ddl.val())
+        };
+
+    $.post(url, add_anti_forgery_token(dados), function (response) {
+        if (response.OK) {
+            div_quant_estoque.text(response.Result);
+        }
+    })
+        .fail(function () {
+            swal('Aviso', 'Não foi possível obter a quantidade em estoque do produto.', 'warning');
+        });
 }
 
 $(document).ready(function () {
@@ -102,19 +121,5 @@ $(document).ready(function () {
         linha.remove();
     })
     .on('change', 'select[id^="ddl_produto_"]', function () {
-        var url = url_recuperar_quantidade_estoque_produto,
-            ddl = $(this),
-            div_quant_estoque = ddl.closest('tr').find('td[class="quant-estoque"]'),
-            dados = {
-                id: parseInt(ddl.val())
-            };
-
-        $.post(url, add_anti_forgery_token(dados), function (response) {
-            if (response.OK) {
-                div_quant_estoque.text(response.Result);
-            }
-        })
-            .fail(function () {
-                swal('Aviso', 'Não foi possível obter a quantidade em estoque do produto.', 'warning');
-            });
+        atualiza_quantidade_estoque($(this));
     });

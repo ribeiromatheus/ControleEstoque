@@ -16,7 +16,7 @@
                 <div class="row">
                     <div class="form-group col-md-5">
                         <label for="minimo" class="control-label">Quantidade Mínima</label>
-                        @Html.TextBox("minimo", "", new {@type = "number", @class = "form-control" })
+                        @Html.TextBox("minimo", "", new {@type = "number", @class = "form-control", @min = 0 })
                     </div>
                 </div>
                 <div class="row">

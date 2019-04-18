@@ -36,6 +36,14 @@
     }
 }
 
+function reset_dropdown_list(ddl_estado_state, ddl_cidade_state) {
+    $(ddl_estado).empty();
+    $(ddl_estado).prop('disabled', ddl_estado_state);
+
+    $(ddl_cidade).empty();
+    $(ddl_cidade).prop('disabled', ddl_cidade_state);
+}
+
 function mudar_pais(id_estado, id_cidade) {
     var ddl_pais = $('#ddl_pais'),
         id_pais = parseInt(ddl_pais.val()),
@@ -46,11 +54,7 @@ function mudar_pais(id_estado, id_cidade) {
         var url = url_listar_estados,
             param = { idPais: id_pais };
 
-        $(ddl_estado).empty();
-        $(ddl_estado).prop('disabled', true);
-
-        $(ddl_cidade).empty();
-        $(ddl_cidade).prop('disabled', true);
+        reset_dropdown_list(true, true);
 
         $.post(url, add_anti_forgery_token(param), function (response) {
             if (response && response.length > 0) {
@@ -64,6 +68,8 @@ function mudar_pais(id_estado, id_cidade) {
 
         sel_estado(id_estado);
         mudar_estado(id_cidade);
+    } else {
+       reset_dropdown_list(true, true);
     }
 }
 
@@ -90,12 +96,14 @@ function mudar_estado(id_cidade) {
         });
 
         sel_cidade(id_cidade);
+    } else {
+        reset_dropdown_list(false, true);
     }
 }
 
 function sel_estado(id_estado) {
     $('#ddl_estado').val(id_estado);
-    $('#ddl_cidade').prop('disabled', $('#ddl_estado option').length == 0);
+    $('#ddl_estado').prop('disabled', $('#ddl_estado option').length == 0);
 }
 
 function sel_cidade(id_cidade) {

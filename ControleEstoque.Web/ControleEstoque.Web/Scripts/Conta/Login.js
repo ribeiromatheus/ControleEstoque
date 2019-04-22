@@ -1,3 +1,3 @@
-﻿$(document).ready(function set_focus_form() {
+﻿$(document).ready(() => {
     $('#Usuario').focus();
 })

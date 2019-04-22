@@ -45,7 +45,7 @@ function reset_dropdown_list(ddl_estado_state, ddl_cidade_state) {
 }
 
 function mudar_pais(id_estado, id_cidade) {
-    var ddl_pais = $('#ddl_pais'),
+    let ddl_pais = $('#ddl_pais'),
         id_pais = parseInt(ddl_pais.val()),
         ddl_estado = ('#ddl_estado'),
         ddl_cidade = $('#ddl_cidade');
@@ -56,9 +56,9 @@ function mudar_pais(id_estado, id_cidade) {
 
         reset_dropdown_list(true, true);
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response && response.length > 0) {
-                for (var i = 0; i < response.length; i++) {
+                for (let i = 0; i < response.length; i++) {
                     $(ddl_estado).append('<option value=' + response[i].Id + '>' + response[i].Nome + '</option>')
                 }
                 $(ddl_estado).prop('disabled', false);
@@ -69,7 +69,7 @@ function mudar_pais(id_estado, id_cidade) {
         sel_estado(id_estado);
         mudar_estado(id_cidade);
     } else {
-       reset_dropdown_list(true, true);
+        reset_dropdown_list(true, true);
     }
 }
 
@@ -79,15 +79,15 @@ function mudar_estado(id_cidade) {
         ddl_cidade = ('#ddl_cidade');
 
     if (id_estado > 0) {
-        var url = url_listar_cidades,
+        let url = url_listar_cidades,
             param = { idEstado: id_estado };
 
         $(ddl_cidade).empty()
         $(ddl_cidade).prop('disabled', true)
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response && response.length > 0) {
-                for (var i = 0; i < response.length; i++) {
+                for (let i = 0; i < response.length; i++) {
                     $(ddl_cidade).append('<option value=' + response[i].Id + '>' + response[i].Nome + '</option>')
                 }
                 $(ddl_cidade).prop('disabled', false);
@@ -169,28 +169,28 @@ function preencher_linha_grid(param, linha) {
 }
 
 $(document)
-    .ready(function () {
+    .ready(() => {
         $('#txt_telefone').mask('(00) 0000-0000');
         $('#txt_cep').mask('00000-000');
     })
-    .on('click', '#rbtn_pessoa_juridica', function () {
+    .on('click', '#rbtn_pessoa_juridica', () => {
         $('label[for="txt_num_documento"]').text('CNPJ');
         $('#txt_num_documento').mask('00.000.000/0000-00', { reverse: true });
         $('#container_razao_social').removeClass('invisible');
     })
-    .on('click', '#rbtn_pessoa_fisica', function () {
+    .on('click', '#rbtn_pessoa_fisica', () => {
         $('label[for="txt_num_documento"]').text('CPF');
         $('#txt_num_documento').mask('000.000.000-00', { reverse: true });
         $('#container_razao_social').addClass('invisible');
     })
-    .on('change', '#ddl_pais', function () {
+    .on('change', '#ddl_pais', () => {
         mudar_pais();
     })
-    .on('change', '#ddl_estado', function () {
+    .on('change', '#ddl_estado', () => {
         mudar_estado();
     })
-    .on('blur', '#txt_cep', function () {
-        var txt_cep = $('#txt_cep').val(),
+    .on('blur', '#txt_cep', () => {
+        let txt_cep = $('#txt_cep').val(),
             url = url_busca_cep,
             param = { 'cep': txt_cep };
 
@@ -202,7 +202,7 @@ $(document)
                 data: add_anti_forgery_token(param),
                 url: url,
                 dataType: "json",
-                beforeSend: function () {
+                beforeSend: () => {
                     swal({
                         text: 'Buscando CEP...',
                         type: 'info',
@@ -213,11 +213,11 @@ $(document)
                         }
                     });
                 },
-                success: function (response) {
+                success: (response) => {
                     $('#txt_logradouro').val(response.Logradouro);
                     swal.close();
                 },
-                error: function () {
+                error: () => {
                     swal('Aviso', 'Não foi possível encontrar o CEP.', 'warning');
                 }
             });

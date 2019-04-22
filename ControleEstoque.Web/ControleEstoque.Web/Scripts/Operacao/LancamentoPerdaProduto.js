@@ -1,5 +1,5 @@
 ﻿function preencher_tela() {
-    var id_inventario = $('#ddl_inventario').val(),
+    let id_inventario = $('#ddl_inventario').val(),
         url = url_recuperar_lista_produto_diferenca_inventario + id_inventario,
         grid = $('#grid').find('tbody');
 
@@ -10,9 +10,9 @@
         processData: false,
         url: url,
         dataType: 'json',
-        success: function (response) {
+        success: (response) => {
             if (response) {
-                for (var i = 0; i < response.length; i++) {
+                for (let i = 0; i < response.length; i++) {
                     grid.append(criar_linha_grid(response[i]));
                 }
             }
@@ -20,22 +20,22 @@
                 swal('Aviso', 'Não foi possível recuperar os produtos do invetário.', 'warning');
             }
         },
-        error: function () {
+        error: () => {
             swal('Aviso', 'Não foi possível recuperar os produtos do invetário.', 'warning');
         }
     });
 }
 
 function criar_linha_grid(dados) {
-    var template = $('#template-grid').html();
+    let template = $('#template-grid').html();
     return Mustache.render(template, dados);
 }
 
 
 function obter_dados() {
-    var ret = [];
+    let ret = [];
 
-    $('#grid tbody tr').each(function (index, item) {
+    $('#grid tbody tr').each((index, item) => {
         var tr = $(item),
             id = tr.attr('data-id'),
             motivo = tr.find('input[type=text]').val();
@@ -48,9 +48,9 @@ function obter_dados() {
 }
 
 function verificar_preenchimento() {
-    var ret = false;
+    let ret = false;
 
-    $('#grid tbody tr input[type=text]').each(function (index, item) {
+    $('#grid tbody tr input[type=text]').each((index, item) => {
         if ($(item).val() != '') {
             ret = true;
             return false
@@ -59,18 +59,18 @@ function verificar_preenchimento() {
     return ret;
 }
 
-$(document).ready(function () {
+$(document).ready(() => {
     preencher_tela();
 })
-    .on('change', '#ddl_inventario', function () {
+    .on('change', '#ddl_inventario', () => {
         preencher_tela();
     })
-    .on('click', '#btn_salvar', function () {
+    .on('click', '#btn_salvar', () => {
         if (!verificar_preenchimento()) {
             swal('Aviso', 'Para salvar, você deve preencher algum motivo.', 'warning');
         }
         else {
-            var url = url_salvar,
+            let url = url_salvar,
                 dados = { dados: obter_dados() };
 
             $.ajax({
@@ -80,7 +80,7 @@ $(document).ready(function () {
                 data: JSON.stringify(add_anti_forgery_token(dados)),
                 url: url,
                 dataType: 'json',
-                success: function (response) {
+                success: (response) => {
                     if (response) {
                         swal('Aviso', 'Lançamento de perdas salvo com sucesso.', 'info');
                     }
@@ -88,7 +88,7 @@ $(document).ready(function () {
                         swal('Aviso', 'Não foi possível salvar os lançamentos de perdas de produtos.', 'warning');
                     }
                 },
-                error: function () {
+                error: () => {
                     swal('Aviso', 'Não foi possível salvar os lançamentos de perdas de produtos.', 'warning');
                 }
             });

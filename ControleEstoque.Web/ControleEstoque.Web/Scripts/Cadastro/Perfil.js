@@ -3,13 +3,13 @@
     $('#txt_nome').val(dados.Nome);
     $('#cbx_ativo').prop('checked', dados.Ativo);
 
-    var lista_usuario = $('#lista_usuario');
+    let lista_usuario = $('#lista_usuario');
     lista_usuario.find('input[type=checkbox]').prop('checked', false);
 
     if (dados.Usuarios) {
-        for (var i = 0; i < dados.Usuarios.length; i++) {
-            var usuario = dados.Usuarios[i];
-            var cbx = lista_usuario.find('input[data-id-usuario=' + usuario.Id + ']');
+        for (let i = 0; i < dados.Usuarios.length; i++) {
+            let usuario = dados.Usuarios[i],
+                cbx = lista_usuario.find('input[data-id-usuario=' + usuario.Id + ']');
             if (cbx) {
                 cbx.prop('checked', true);
             }
@@ -53,8 +53,8 @@ function get_lista_usuarios_marcados() {
     var ids = [],
         lista_usuario = $('#lista_usuario');
 
-    lista_usuario.find('input[type=checkbox]').each(function (index, input) {
-        var cbx = $(input),
+    lista_usuario.find('input[type=checkbox]').each((index, input) => {
+        let cbx = $(input),
             marcado = cbx.is(':checked');
 
         if (marcado) {

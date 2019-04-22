@@ -1,8 +1,8 @@
 ﻿var sequencia = 1;
 
 function formatar_data(data) {
-    var dia = ('0' + data.getDate()).slice(-2);
-    var mes = ('0' + (data.getMonth() + 1)).slice(-2);
+    let dia = ('0' + data.getDate()).slice(-2),
+        mes = ('0' + (data.getMonth() + 1)).slice(-2);
     return data.getFullYear() + "-" + mes + "-" + dia;
 }
 
@@ -17,14 +17,14 @@ function limpar_tela() {
     $('#grid tbody').empty();
     incluir_linha_produto();
 
-    var ddl = $('#grid tbody tr select:first');
+    let ddl = $('#grid tbody tr select:first');
     if (ddl.length > 0) {
         ddl.trigger('change');
     }
 }
 
 function obter_lista_saidas() {
-    var ret = []
+    let ret = []
 
     $('#grid tbody tr').each(function (index, item) {
         var txt_quantidade = $(this).find('input'),
@@ -41,60 +41,60 @@ function obter_lista_saidas() {
 }
 
 function atualiza_quantidade_estoque(this_select) {
-    var url = url_recuperar_quantidade_estoque_produto,
+    let url = url_recuperar_quantidade_estoque_produto,
         ddl = $(this_select),
         div_quant_estoque = ddl.closest('tr').find('td[class="quant-estoque"]'),
         dados = {
             id: parseInt(ddl.val())
         };
 
-    $.post(url, add_anti_forgery_token(dados), function (response) {
+    $.post(url, add_anti_forgery_token(dados), (response) => {
         if (response.OK) {
             div_quant_estoque.text(response.Result);
         }
     })
-        .fail(function () {
+        .fail(() => {
             swal('Aviso', 'Não foi possível obter a quantidade em estoque do produto.', 'warning');
         });
 }
 
-$(document).ready(function () {
-    var hoje = new Date();
+$(document).ready(() => {
+    let hoje = new Date();
     $('#txt_data').val(formatar_data(hoje));
 
     limpar_tela();
 
 })
-    .on('click', '#btn_incluir', function () {
+    .on('click', '#btn_incluir', () => {
         incluir_linha_produto();
     })
     .on('click', '#btn_salvar', function () {
-        var btn = $(this),
+        let btn = $(this),
             lista_saidas = obter_lista_saidas();
 
         if (lista_saidas.length == 0) {
             swal('Aviso', 'Para salvar, você deve informar produtos com quantidades', 'warning');
         }
         else {
-            var url = url_salvar,
+            let url = url_salvar,
                 dados = {
                     data: $('#txt_data').val(),
                     produtos: JSON.stringify(lista_saidas)
                 };
 
-            $.post(url, add_anti_forgery_token(dados), function (response) {
+            $.post(url, add_anti_forgery_token(dados), (response) => {
                 if (response.OK) {
                     $('#txt_numero').val(response.Numero);
                     swal('Sucesso', 'Saída de produtos salva com sucesso', 'info');
                 }
             })
-                .fail(function () {
+                .fail(() => {
                     swal('Aviso', 'Não foi possível salvar a saída de produtos', 'warning');
                 });
         }
     })
-    .on('click', '#btn_cancelar', function () {
-        var lista_saidas = obter_lista_saidas();
+    .on('click', '#btn_cancelar', () => {
+        let lista_saidas = obter_lista_saidas();
 
         if (lista_saidas.length == 0 || $('#txt_numero').val() != "") {
             limpar_tela();
@@ -109,7 +109,7 @@ $(document).ready(function () {
                 cancelButtonText: 'Não',
                 confirmButtonClass: 'btn-primary',
                 confirmButtonText: 'Sim'
-            }).then(function (opcao) {
+            }).then((opcao) => {
                 if (opcao.value) {
                     limpar_tela();
                 }
@@ -117,7 +117,7 @@ $(document).ready(function () {
         }
     })
     .on('click', '.btn_remover', function () {
-        var linha = $(this).closest('tr');
+        let linha = $(this).closest('tr');
         linha.remove();
     })
     .on('change', 'select[id^="ddl_produto_"]', function () {

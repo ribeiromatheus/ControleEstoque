@@ -74,10 +74,10 @@ function salvar_customizado(url, param, salvar_ok, salvar_erro) {
         data: param,
         url: url,
         dataType: "json",
-        success: function (response) {
+        success: (response) => {
             salvar_ok(response, get_param);
         },
-        error: function (response) {
+        error: (response) => {
             salvar_erro();
         }
     });
@@ -95,12 +95,12 @@ function get_param() {
 }
 
 $(document)
-    .ready(function () {
+    .ready(() => {
         $('#txt_preco_custo,#txt_preco_venda').mask('#.##0,00', { reverse: true });
         $('#txt_quant_estoque').mask('00000');
     })
-    .on('click', '.btn-exibir-imagem', function () {
-        var nome_imagem = $(this).closest('tr').attr('data-imagem'),
+    .on('click', '.btn-exibir-imagem', () => {
+        let nome_imagem = $(this).closest('tr').attr('data-imagem'),
             modal_imagem = $('#modal_imagem'),
             template_imagem = $('#template-imagem'),
             conteudo_modal_imagem = Mustache.render(template_imagem.html(), { Imagem: nome_imagem });
@@ -112,10 +112,10 @@ $(document)
             message: modal_imagem,
             className: 'dialogo'
         })
-            .on('shown.bs.modal', function () {
+            .on('shown.bs.modal', () => {
                 modal_imagem.show();
             })
-            .on('hidden.bs.modal', function () {
+            .on('hidden.bs.modal', () => {
                 modal_imagem.hide().appendTo('body');
             });
     });

@@ -9,7 +9,7 @@ function formatar_mensagem_aviso(mensagens) {
 
     //return '<ul>' + ret + '</ul>';
 
-    var template =
+    const template =
         '<ul>' +
         '{{ #. }}' +
         '<li>{{ . }}</li>' +
@@ -20,7 +20,7 @@ function formatar_mensagem_aviso(mensagens) {
 }
 
 function marcar_ordenacao_campo(coluna) {
-    var ordem_crescente = true,
+    let ordem_crescente = true,
         ordem = $(coluna).find('i');
 
     if (ordem.length > 0) {
@@ -41,11 +41,11 @@ function marcar_ordenacao_campo(coluna) {
 }
 
 function obter_ordem_grid() {
-    var colunas_grid = $('.coluna-ordenacao'),
+    let colunas_grid = $('.coluna-ordenacao'),
         ret = '';
 
-    colunas_grid.each(function (index, item) {
-        var coluna = $(item),
+    colunas_grid.each((index, item) => {
+        let coluna = $(item),
             ordem = coluna.find('i');
 
         if (ordem.length > 0) {
@@ -60,7 +60,7 @@ function obter_ordem_grid() {
 function abrir_form(dados) {
     set_dados_form(dados);
 
-    var modal_cadastro = $('#modal_cadastro');
+    let modal_cadastro = $('#modal_cadastro');
 
     $('#msg_mensagem_aviso').empty();
     $('#msg_aviso').hide();
@@ -72,18 +72,18 @@ function abrir_form(dados) {
         message: modal_cadastro,
         className: 'dialogo',
     })
-        .on('shown.bs.modal', function () {
-            modal_cadastro.show(0, function () {
+        .on('shown.bs.modal', () => {
+            modal_cadastro.show(0, () => {
                 set_focus_form();
             });
         })
-        .on('hidden.bs.modal', function () {
+        .on('hidden.bs.modal', () => {
             modal_cadastro.hide().appendTo('body');
         });
 }
 
 function criar_linha_grid(dados) {
-    var template = $('#template-grid').html();
+    const template = $('#template-grid').html();
 
     return Mustache.render(template, dados);
 
@@ -103,7 +103,7 @@ function salvar_ok(response, param) {
     if (response.Resultado == "OK") {
         if (param.Id == 0) {
             param.Id = response.IdSalvo;
-            var table = $('#grid_cadastro').find('tbody'),
+            let table = $('#grid_cadastro').find('tbody'),
                 linha = criar_linha_grid(param);
 
             table.append(linha);
@@ -111,7 +111,7 @@ function salvar_ok(response, param) {
             $('#mensagem_grid').addClass('invisivel');
         }
         else {
-            var linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
+            let linha = $('#grid_cadastro').find('tr[data-id=' + param.Id + ']').find('td');
             preencher_linha_grid(param, linha);
         }
 
@@ -134,26 +134,26 @@ function salvar_erro() {
     swal('Aviso', 'Não foi possível salvar. Tente novamente em instantes.', 'warning');
 }
 
-$(document).on('click', '#btn_incluir', function () {
+$(document).on('click', '#btn_incluir', () => {
     abrir_form(get_dados_inclusao());
 })
     .on('click', '.btn-alterar', function () {
-        var btn = $(this),
+        let btn = $(this),
             id = btn.closest('tr').attr('data-id'),
             url = url_alterar,
             param = { 'id': id };
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response) {
                 abrir_form(response);
             }
         })
-            .fail(function () {
+            .fail(() => {
                 swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
             });
     })
     .on('click', '.btn-excluir', function () {
-        var btn = $(this),
+        let btn = $(this),
             tr = btn.closest('tr'),
             id = tr.attr('data-id'),
             url = url_excluir,
@@ -171,19 +171,19 @@ $(document).on('click', '#btn_incluir', function () {
                     className: 'btn-success'
                 }
             },
-            callback: function (result) {
+            callback: (result) => {
                 if (result) {
-                    $.post(url, add_anti_forgery_token(param), function (response) {
+                    $.post(url, add_anti_forgery_token(param), (response) => {
                         if (response) {
                             tr.remove();
-                            var quant = $('#grid_cadastro > tbody > tr').length;
+                            let quant = $('#grid_cadastro > tbody > tr').length;
                             if (quant == 0) {
                                 $('#grid_cadastro').addClass('invisivel');
                                 $('#mensagem_grid').removeClass('invisivel');
                             }
                         }
                     })
-                        .fail(function () {
+                        .fail(() => {
                             swal('Aviso', 'Não foi possível excluir. Tente novamente em instantes.', 'warning');
                         });
                 }
@@ -191,7 +191,7 @@ $(document).on('click', '#btn_incluir', function () {
         });
     })
     .on('click', '#btn_confirmar', function () {
-        var btn = $(this),
+        let btn = $(this),
             url = url_confirmar,
             param = get_dados_form();
 
@@ -199,10 +199,10 @@ $(document).on('click', '#btn_incluir', function () {
             salvar_customizado(url, param, salvar_ok, salvar_erro)
         }
         else {
-            $.post(url, add_anti_forgery_token(param), function (response) {
+            $.post(url, add_anti_forgery_token(param), (response) => {
                 salvar_ok(response, param);
             })
-                .fail(function () {
+                .fail(() => {
                     salvar_erro();
                 });
         }
@@ -216,15 +216,15 @@ $(document).on('click', '#btn_incluir', function () {
             url = url_page_click,
             param = { 'pagina': pagina, 'tamPag': tamPag, 'filtro': filtro.val(), 'ordem': ordem };
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response) {
-                var table = $('#grid_cadastro').find('tbody');
+                let table = $('#grid_cadastro').find('tbody');
 
                 table.empty();
                 if (response.length > 0) {
                     $('#grid_cadastro').removeClass('invisivel');
                     $('#mensagem_grid').addClass('invisivel');
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         table.append(criar_linha_grid(response[i]));
                     }
                 }
@@ -237,12 +237,12 @@ $(document).on('click', '#btn_incluir', function () {
                 btn.addClass('active');
             }
         })
-            .fail(function () {
+            .fail(() => {
                 swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
             });
     })
     .on('change', '#ddl_tam_pag', function () {
-        var ordem = obter_ordem_grid(),
+        let ordem = obter_ordem_grid(),
             ddl = $(this),
             tamPag = ddl.val(),
             filtro = $('#txt_filtro'),
@@ -250,7 +250,7 @@ $(document).on('click', '#btn_incluir', function () {
             url = url_tam_pag_change,
             param = { 'pagina': pagina, 'tamPag': tamPag, 'filtro': filtro.val(), 'ordem': ordem };
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response) {
                 var table = $('#grid_cadastro').find('tbody');
 
@@ -258,7 +258,7 @@ $(document).on('click', '#btn_incluir', function () {
                 if (response.length > 0) {
                     $('#grid_cadastro').removeClass('invisivel');
                     $('#mensagem_grid').addClass('invisivel');
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         table.append(criar_linha_grid(response[i]));
                     }
                 }
@@ -268,12 +268,12 @@ $(document).on('click', '#btn_incluir', function () {
                 }
             }
         })
-            .fail(function () {
+            .fail(() => {
                 swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
             });
     })
     .on('keyup', '#txt_filtro', function () {
-        var ordem = obter_ordem_grid(),
+        let ordem = obter_ordem_grid(),
             filtro = $(this),
             ddl = $('#ddl_tam_pag'),
             tamPag = ddl.val(),
@@ -281,16 +281,16 @@ $(document).on('click', '#btn_incluir', function () {
             url = url_filtro_change,
             param = { 'pagina': pagina, 'tamPag': tamPag, 'filtro': filtro.val(), 'ordem': ordem };
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response) {
-                var table = $('#grid_cadastro').find('tbody');
+                let table = $('#grid_cadastro').find('tbody');
 
                 table.empty();
                 if (response.length > 0) {
                     $('#grid_cadastro').removeClass('invisivel');
                     $('#mensagem_grid').addClass('invisivel');
 
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         table.append(criar_linha_grid(response[i]));
                     }
                 }
@@ -300,7 +300,7 @@ $(document).on('click', '#btn_incluir', function () {
                 }
             }
         })
-            .fail(function () {
+            .fail(() => {
                 swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
             });
     })
@@ -315,16 +315,16 @@ $(document).on('click', '#btn_incluir', function () {
             url = url_filtro_change,
             param = { 'pagina': pagina, 'tamPag': tamPag, 'filtro': filtro.val(), 'ordem': ordem };
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response) {
-                var table = $('#grid_cadastro').find('tbody');
+                let table = $('#grid_cadastro').find('tbody');
 
                 table.empty();
                 if (response.length > 0) {
                     $('#grid_cadastro').removeClass('invisivel');
                     $('#mensagem_grid').addClass('invisivel');
 
-                    for (var i = 0; i < response.length; i++) {
+                    for (let i = 0; i < response.length; i++) {
                         table.append(criar_linha_grid(response[i]));
                     }
                 }
@@ -334,16 +334,15 @@ $(document).on('click', '#btn_incluir', function () {
                 }
             }
         })
-            .fail(function () {
+            .fail(() => {
                 swal('Aviso', 'Não foi possível recuperar as informações. Tente novamente em instantes.', 'warning');
             });
+    })
+    .ready(() => {
+        var grid = $('#grid_cadastro > tbody');
+        for (let i = 0; i < linhas.length; i++) {
+            grid.append(criar_linha_grid(linhas[i]));
+        }
+
+        marcar_ordenacao_campo($('#grid_cadastro thead tr th:nth-child(1) span'));
     });
-
-$(document).ready(function () {
-    var grid = $('#grid_cadastro > tbody');
-    for (var i = 0; i < linhas.length; i++) {
-        grid.append(criar_linha_grid(linhas[i]));
-    }
-
-    marcar_ordenacao_campo($('#grid_cadastro thead tr th:nth-child(1) span'));
-});

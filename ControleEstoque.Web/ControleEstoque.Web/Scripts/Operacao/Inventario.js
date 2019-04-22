@@ -1,13 +1,13 @@
 ﻿function limpar_tela() {
-    $('#grid tbody tr input').each(function (index, input) {
+    $('#grid tbody tr input').each((index, input) => {
         $(input).val('');
     });
 }
 
 function verificar_preenchimento() {
-    var ret = false;
+    let ret = false;
 
-    $('#grid tbody tr input[type=number]').each(function (index, input) {
+    $('#grid tbody tr input[type=number]').each((index, input) => {
         if ($(input).val() != '') {
             ret = true;
             return false;
@@ -18,10 +18,10 @@ function verificar_preenchimento() {
 }
 
 function obter_dados_inventario() {
-    var ret = [];
+    let ret = [];
 
-    $('#grid tbody tr').each(function (index, item) {
-        var tr = $(item),
+    $('#grid tbody tr').each((index, item) => {
+        let tr = $(item),
             quant_estoque = parseInt(tr.find('td').eq(4).text()),
             id_produto = tr.attr('data-id'),
             quant_inventario = parseInt(tr.find('input[type=number]').val()),
@@ -38,10 +38,10 @@ function obter_dados_inventario() {
     return ret;
 }
 
-$(document).ready(function () {
+$(document).ready(() => {
     limpar_tela();
 })
-    .on('click', '#btn_incluir', function () {
+    .on('click', '#btn_incluir', () => {
         if (verificar_preenchimento()) {
             swal({
                 html: 'Algumas quantidades já foram preenchidas,<br>Deseja realmente limpar os dados para iniciar um novo inventário?',
@@ -52,7 +52,7 @@ $(document).ready(function () {
                 cancelButtonText: 'Não',
                 confirmButtonClass: 'btn btn-primary',
                 confirmButtonText: 'Sim'
-            }).then(function (opcao) {
+            }).then((opcao) => {
                 if (opcao.value) {
                     limpar_tela();
                 }
@@ -62,12 +62,12 @@ $(document).ready(function () {
             limpar_tela();
         }
     })
-    .on('click', '#btn_salvar', function () {
+    .on('click', '#btn_salvar', () => {
         if (!verificar_preenchimento()) {
             swal('Aviso', 'Para salvar, você deve preencher todas as quantidades.', 'warning');
         }
         else {
-            var url = url_salvar,
+            let url = url_salvar,
                 dados = { dados: obter_dados_inventario() };
 
             $.ajax({
@@ -77,7 +77,7 @@ $(document).ready(function () {
                 data: JSON.stringify(add_anti_forgery_token(dados)),
                 url: url,
                 dataType: 'json',
-                success: function (response) {
+                success: (response) => {
                     if (response.OK) {
                         swal('Sucesso', 'Inventário salvo com sucesso.', 'info');
                         limpar_tela();
@@ -86,7 +86,7 @@ $(document).ready(function () {
                         swal('Aviso', 'Não foi possível salvar o inventário.', 'warning');
                     }
                 },
-                error: function () {
+                error: () => {
                     swal('Aviso', 'Não foi possível salvar o inventário.', 'warning');
                 }
             })

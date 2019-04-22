@@ -4,7 +4,7 @@
 }
 
 $(document)
-    .on('keydown', 'input[type="number"]', function (e) {
+    .on('keydown', 'input[type="number"]', (e) => {
         if (e.key === 'e') {
             e.preventDefault();
         }

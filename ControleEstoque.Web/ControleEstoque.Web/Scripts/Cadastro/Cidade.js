@@ -44,20 +44,20 @@ function preencher_linha_grid(param, linha) {
 }
 
 $(document).on('change', '#ddl_pais', function () {
-    var ddl_pais = $(this),
+    let ddl_pais = $(this),
         id_pais = parseInt(ddl_pais.val()),
         ddl_estado = ('#ddl_estado');
 
     if (id_pais > 0) {
-        var url = url_listar_estados,
+        let url = url_listar_estados,
             param = { idPais: id_pais };
 
         $(ddl_estado).empty()
         $(ddl_estado).prop('disabled', true)
 
-        $.post(url, add_anti_forgery_token(param), function (response) {
+        $.post(url, add_anti_forgery_token(param), (response) => {
             if (response && response.length > 0) {
-                for (var i = 0; i < response.length; i++) {
+                for (let i = 0; i < response.length; i++) {
                     $(ddl_estado).append('<option value=' + response[i].Id + '>' + response[i].Nome + '</option>')
                 }
                 $(ddl_estado).prop('disabled', false)

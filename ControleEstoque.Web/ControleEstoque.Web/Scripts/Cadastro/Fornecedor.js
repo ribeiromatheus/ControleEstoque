@@ -11,9 +11,6 @@
     $('#txt_numero').val(dados.Numero);
     $('#txt_complemento').val(dados.Complemento);
     $('#txt_cep').val(dados.Cep);
-    $('#ddl_pais option:eq(0)').val(dados.IdPais);
-    $('#ddl_estado').val(dados.IdEstado);
-    $('#ddl_cidade').val(dados.IdCidade);
     $('#cbx_ativo').prop('checked', dados.Ativo);
 
     if (dados.Tipo == 2) {
@@ -25,10 +22,7 @@
 
     var inclusao = (dados.Id == 0);
     if (inclusao) {
-        $('#ddl_estado').empty();
-        $('#ddl_estado').prop('disabled', true);
-        $('#ddl_cidade').empty();
-        $('#ddl_cidade').prop('disabled', true);
+        reset_dropdown_list(true, true);
     }
     else {
         $('#ddl_pais').val(dados.IdPais);
@@ -37,11 +31,11 @@
 }
 
 function reset_dropdown_list(ddl_estado_state, ddl_cidade_state) {
-    $(ddl_estado).empty();
-    $(ddl_estado).prop('disabled', ddl_estado_state);
+    $('#ddl_estado').empty();
+    $('#ddl_estado').prop('disabled', ddl_estado_state);
 
-    $(ddl_cidade).empty();
-    $(ddl_cidade).prop('disabled', ddl_cidade_state);
+    $('#ddl_cidade').empty();
+    $('#ddl_cidade').prop('disabled', ddl_cidade_state);
 }
 
 function mudar_pais(id_estado, id_cidade) {

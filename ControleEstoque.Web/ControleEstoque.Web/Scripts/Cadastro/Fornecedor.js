@@ -30,12 +30,12 @@
     }
 }
 
-function reset_dropdown_list(ddl_estado_state, ddl_cidade_state) {
+function reset_dropdown_list(ddl_estado_status, ddl_cidade_status) {
     $('#ddl_estado').empty();
-    $('#ddl_estado').prop('disabled', ddl_estado_state);
+    $('#ddl_estado').prop('disabled', ddl_estado_status);
 
     $('#ddl_cidade').empty();
-    $('#ddl_cidade').prop('disabled', ddl_cidade_state);
+    $('#ddl_cidade').prop('disabled', ddl_cidade_status);
 }
 
 function mudar_pais(id_estado, id_cidade) {
@@ -59,10 +59,10 @@ function mudar_pais(id_estado, id_cidade) {
                 $(ddl_estado).find('option:eq(0)').prop('selected', true);
             }
         });
-
         sel_estado(id_estado);
         mudar_estado(id_cidade);
-    } else {
+    }
+    else {
         reset_dropdown_list(true, true);
     }
 }
@@ -88,7 +88,6 @@ function mudar_estado(id_cidade) {
                 $(ddl_cidade).find('option:eq(0)').prop('selected', true);
             }
         });
-
         sel_cidade(id_cidade);
     } else {
         reset_dropdown_list(false, true);
@@ -190,7 +189,8 @@ $(document)
 
         if (!txt_cep) {
             return;
-        } else {
+        }
+        else {
             $.ajax({
                 type: "POST",
                 data: add_anti_forgery_token(param),

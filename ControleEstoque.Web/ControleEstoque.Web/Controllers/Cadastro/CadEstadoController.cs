@@ -57,10 +57,7 @@ namespace ControleEstoque.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirEstado(int id)
-        {
-            return Json(EstadoModel.ExcluirPeloId(id));
-        }
+        public JsonResult ExcluirEstado(int id) => Json(EstadoModel.ExcluirPeloId(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]

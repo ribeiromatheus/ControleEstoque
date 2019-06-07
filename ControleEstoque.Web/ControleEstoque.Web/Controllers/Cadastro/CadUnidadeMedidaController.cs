@@ -50,10 +50,7 @@ namespace ControleEstoque.Web.Controllers
         [HttpPost]
         [Authorize]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirUnidadeMedida(int id)
-        {
-            return Json(UnidadeMedidaModel.ExcluirPeloId(id));
-        }
+        public JsonResult ExcluirUnidadeMedida(int id) => Json(UnidadeMedidaModel.ExcluirPeloId(id));
 
         [HttpPost]
         [Authorize]

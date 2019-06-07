@@ -49,10 +49,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult ExcluirUsuario(int id)
-        {
-            return Json(UsuarioModel.ExcluirPeloId(id));
-        }
+        public ActionResult ExcluirUsuario(int id) => Json(UsuarioModel.ExcluirPeloId(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]

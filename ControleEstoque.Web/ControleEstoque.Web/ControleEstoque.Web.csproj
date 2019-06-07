@@ -200,7 +200,6 @@
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\ViewModel\AlteracaoSenhaUsuarioViewModel.cs" />
     <Compile Include="Models\Binders\EntradaSaidaProdutoViewModelModelBinder.cs" />
-    <Compile Include="Models\BlocoProdutoViewModel.cs" />
     <Compile Include="Models\ContextoBD.cs" />
     <Compile Include="Models\Domain\SaidaProdutoModel.cs" />
     <Compile Include="Models\Domain\EntradaProdutoModel.cs" />
@@ -213,10 +212,6 @@
     <Compile Include="Models\ViewModel\GrupoProdutoViewModel.cs" />
     <Compile Include="Models\ViewModel\InventarioComDiferencaViewModel.cs" />
     <Compile Include="Models\ViewModel\ItemInventarioViewModel.cs" />
-    <Compile Include="Models\ListaCidadeViewModel.cs" />
-    <Compile Include="Models\ListaEstadoViewModel.cs" />
-    <Compile Include="Models\ListaPaisViewModel.cs" />
-    <Compile Include="Models\ListaProdutoViewModel.cs" />
     <Compile Include="Models\Maps\CidadeMap.cs" />
     <Compile Include="Models\Maps\SaidaProdutoMap.cs" />
     <Compile Include="Models\Maps\EntradaProdutoMap.cs" />
@@ -520,7 +515,6 @@
     <Content Include="Views\Conta\RedefinirSenha.cshtml" />
     <Content Include="Views\CadProduto\Index.cshtml" />
     <Content Include="Views\OperEntradaProduto\Index.cshtml" />
-    <Content Include="Views\Home\_BlocoProdutoPartial.cshtml" />
     <Content Include="Views\OperSaidaProduto\Index.cshtml" />
     <Content Include="Views\OperInventario\Index.cshtml" />
     <Content Include="Views\OperLacamentoPerdaProduto\Index.cshtml" />

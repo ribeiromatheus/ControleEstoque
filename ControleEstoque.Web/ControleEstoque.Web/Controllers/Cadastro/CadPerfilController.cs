@@ -48,10 +48,7 @@ namespace ControleEstoque.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirPerfil(int id)
-        {
-            return Json(PerfilModel.ExcluirPeloId(id));
-        }
+        public JsonResult ExcluirPerfil(int id) => Json(PerfilModel.ExcluirPeloId(id));
 
         [HttpPost]
         [ValidateAntiForgeryToken]

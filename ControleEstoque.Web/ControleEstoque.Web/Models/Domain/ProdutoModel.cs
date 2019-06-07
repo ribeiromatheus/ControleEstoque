@@ -84,12 +84,12 @@ namespace ControleEstoque.Web.Models
                 var filtroWhere = "";
                 if (!string.IsNullOrEmpty(filtro))
                 {
-                    filtroWhere = string.Format(" where (lower(nome) like '%{0}%')", filtro.ToLower());
+                    filtroWhere = string.Format("where (lower(nome) like '%{0}%')", filtro.ToLower());
                 }
 
                 if (somenteAtivos)
                 {
-                    filtroWhere = (string.IsNullOrEmpty(filtroWhere) ? " where" : " and") + "(ativo = 1)";
+                    filtroWhere = (string.IsNullOrEmpty(filtroWhere) ? "where" : "and ") + "(ativo = 1) ";
                 }
 
                 var paginacao = "";
@@ -106,7 +106,7 @@ namespace ControleEstoque.Web.Models
                     " as IdUnidadeMedida, id_grupo as IdGrupo, id_marca as IdMarca, id_fornecedor" +
                     " as IdFornecedor, id_local_armazenamento as IdLocalArmazenamento from produto " +
                     filtroWhere +
-                    " order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
+                    "order by " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
                     paginacao;
                 ret = db.Database.Connection.Query<ProdutoModel>(sql).ToList();
             }

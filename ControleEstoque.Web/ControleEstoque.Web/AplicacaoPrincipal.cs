@@ -7,6 +7,9 @@ namespace ControleEstoque.Web
     {
         public UsuarioModel Dados { get; set; }
 
-        public AplicacaoPrincipal(IIdentity identity, string[] roles, int id) : base(identity, roles) => Dados = UsuarioModel.RecuperarPeloId(id);
+        public AplicacaoPrincipal(IIdentity identity, string[] roles, int id) : base(identity, roles)
+        {
+            Dados = UsuarioModel.RecuperarPeloId(id);
+        }
     }
 }

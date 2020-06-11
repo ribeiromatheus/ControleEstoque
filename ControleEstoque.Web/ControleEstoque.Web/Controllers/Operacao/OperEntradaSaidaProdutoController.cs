@@ -5,7 +5,7 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
 {
-    public abstract class OperEntradaSaidaProdutoController : Controller
+    public abstract class OperEntradaSaidaProdutoController : BaseController
     {
         public ActionResult Index()
         {

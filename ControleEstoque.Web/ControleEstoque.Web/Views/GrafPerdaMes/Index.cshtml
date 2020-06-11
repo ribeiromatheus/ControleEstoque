@@ -1,0 +1,50 @@
+﻿<h2>Perda de Produtos no Mês</h2>
+
+@{
+    var dias = ViewBag.Dias;
+    var mes = ViewBag.Mes;
+    var ano = ViewBag.Ano;
+    var perdas = (ViewBag.Perdas as List<int>);
+
+    var diasSerializado = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(dias));
+    var perdasSerializado = Html.Raw(Newtonsoft.Json.JsonConvert.SerializeObject(perdas));
+}
+
+<canvas id="grafico" width="400" height="400"></canvas>
+
+@section Scripts{
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.9.3/dist/Chart.min.js"></script>
+    <script>
+        const dias = @diasSerializado,
+            perdas = @perdasSerializado;
+
+        $(document)
+            .ready(function () {
+                const ctx = $('#grafico');
+                new Chart(ctx, {
+                    type: 'bar',
+                    data: {
+                        labels: dias,
+                        datasets: [{
+                            data: perdas,
+                            backgroundColor: 'rgba(54, 162, 235, 0.2)',
+                            borderColor: 'rgba(54, 162, 235, 1)',
+                            borderWidth: 1
+                        }]
+                    },
+                    options: {
+                        legend: {
+                            display: false
+                        },
+                        scales: {
+                            yAxes: [{
+                                ticks: {
+                                    beginAtZero: true
+                                }
+                            }]
+                        }
+                    }
+                });
+            });
+    </script>
+}

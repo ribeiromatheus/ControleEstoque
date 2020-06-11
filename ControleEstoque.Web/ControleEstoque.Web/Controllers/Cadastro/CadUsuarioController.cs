@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace ControleEstoque.Web.Controllers
 {
     [Authorize(Roles = "Gerente")]
-    public class CadUsuarioController : Controller
+    public class CadUsuarioController : BaseController
     {
         private const int _quantMaxLinhasPorPagina = 5;
         private const string _senhaPadrao = "($127,$188)";

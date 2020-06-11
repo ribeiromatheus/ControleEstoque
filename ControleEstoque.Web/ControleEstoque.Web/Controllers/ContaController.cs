@@ -9,7 +9,7 @@ using System.Web.Security;
 
 namespace ControleEstoque.Web.Controllers
 {
-    public class ContaController : Controller
+    public class ContaController : BaseController
     {
         [AllowAnonymous]
         public ActionResult Login(string returnUrl)
@@ -182,19 +182,6 @@ namespace ControleEstoque.Web.Controllers
 
             client.Send(mensagem);
 
-        }
-
-        // Gráficos
-        [Authorize]
-        public ActionResult PerdaMes()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult EntradaSaidaMes()
-        {
-            return View();
         }
     }
 }

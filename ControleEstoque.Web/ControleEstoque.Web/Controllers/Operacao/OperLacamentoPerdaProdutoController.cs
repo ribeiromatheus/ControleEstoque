@@ -5,7 +5,7 @@ using System.Web.Mvc;
 namespace ControleEstoque.Web.Controllers.Operacao
 {
     [Authorize(Roles = "Gerente,Administrativo")]
-    public class OperLacamentoPerdaProdutoController : Controller
+    public class OperLacamentoPerdaProdutoController : BaseController
     {
         public ActionResult Index()
         {

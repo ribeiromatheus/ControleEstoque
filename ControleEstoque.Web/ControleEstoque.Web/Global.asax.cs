@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Principal;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Optimization;
@@ -10,7 +7,7 @@ using System.Web.Security;
 
 namespace ControleEstoque.Web
 {
-    public class MvcApplication : System.Web.HttpApplication
+    public class MvcApplication : HttpApplication
     {
         protected void Application_Start()
         {
@@ -18,7 +15,11 @@ namespace ControleEstoque.Web
             FilterConfig.RegisterGlobalFilters(GlobalFilters.Filters);
             RouteConfig.RegisterRoutes(RouteTable.Routes);
             BundleConfig.RegisterBundles(BundleTable.Bundles);
-            AutoMapperConfig.RegisterMappings();
+        }
+
+        protected void Application_BeginRequest()
+        {
+            Context.Items["Mapper"] = AutoMapperProfile.CreateConfig();
         }
 
         void Application_Error(object sender, EventArgs e)

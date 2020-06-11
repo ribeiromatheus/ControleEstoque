@@ -4,7 +4,7 @@ using System.Web.Mvc;
 
 namespace ControleEstoque.Web.Controllers
 {
-    public class OperInventarioController : Controller
+    public class OperInventarioController : BaseController
     {
         public ActionResult Index()
         {

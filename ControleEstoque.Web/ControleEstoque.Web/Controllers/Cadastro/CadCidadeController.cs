@@ -8,7 +8,7 @@ using System.Web.Mvc;
 namespace ControleEstoque.Web.Controllers
 {
     [Authorize(Roles = "Gerente,Administrativo,Operador")]
-    public class CadCidadeController : Controller
+    public class CadCidadeController : BaseController
     {
         private const int _quantMaxLinhasPorPagina = 5;
 

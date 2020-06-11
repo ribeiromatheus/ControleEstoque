@@ -183,18 +183,5 @@ namespace ControleEstoque.Web.Controllers
             client.Send(mensagem);
 
         }
-
-        // Gráficos
-        [Authorize]
-        public ActionResult PerdaMes()
-        {
-            return View();
-        }
-
-        [Authorize]
-        public ActionResult EntradaSaidaMes()
-        {
-            return View();
-        }
     }
 }

@@ -195,6 +195,7 @@
     <Compile Include="Controllers\Cadastro\CadPerfilController.cs" />
     <Compile Include="Controllers\Cadastro\CadUnidadeMedidaController.cs" />
     <Compile Include="Controllers\Cadastro\CadUsuarioController.cs" />
+    <Compile Include="Controllers\Grafico\GrafPerdaMesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaProdutoController.cs" />
     <Compile Include="Controllers\Operacao\OperEntradaSaidaProdutoController.cs" />
@@ -535,6 +536,7 @@
     <Content Include="Views\Relatorio\RelatPosicaoEstoqueView.cshtml" />
     <Content Include="Views\Relatorio\FiltroRelatRessuprimentoView.cshtml" />
     <Content Include="Views\Relatorio\RelatRessuprimentoView.cshtml" />
+    <Content Include="Views\GrafPerdaMes\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

@@ -9,6 +9,6 @@ namespace ControleEstoque.Web.Models
         public DateTime Data { get; set; }
         public int Quantidade { get; set; }
         public int IdProduto { get; set; }
-        public virtual ProdutoModel Produto { get; set; }
+        public virtual ProdutoViewModel Produto { get; set; }
     }
 }

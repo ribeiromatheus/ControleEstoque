@@ -12,7 +12,7 @@ namespace ControleEstoque.Web.Models
         public string Nome { get; set; }
         public bool Ativo { get; set; }
         #endregion
-        
+
         #region Métodos
         public static int RecuperarQuantidade()
         {
@@ -63,21 +63,17 @@ namespace ControleEstoque.Web.Models
                     filtroWhere = string.Format(" WHERE LOWER(nome) LIKE '%{0}%'", filtro.ToLower());
                 }
 
-                var paginacao = "";
                 var pos = (pagina - 1) * tamPagina;
-                if (pagina > 0 && tamPagina > 0)
-                {
-                    paginacao = string.Format(" OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY",
-                       pos > 0 ? pos - 1 : 0, tamPagina);
-                }
 
                 //comando.Connection = conexao;
                 //comando.CommandText =
-                var sql =
+                var sql = string.Format(
                     "SELECT * FROM tb_grupoProdutos " +
                     filtroWhere +
                     " ORDER BY " + (!string.IsNullOrEmpty(ordem) ? ordem : "nome") +
-                    paginacao;
+                    " OFFSET {0} ROWS FETCH NEXT {1} ROWS ONLY",
+                    pos, tamPagina);
+
                 ret = db.Database.Connection.Query<GrupoProdutoModel>(sql).ToList();
                 //var reader = comando.ExecuteReader();
 
@@ -136,7 +132,7 @@ namespace ControleEstoque.Web.Models
                     db.Entry(grupoProduto).State = EntityState.Deleted;
                     db.SaveChanges();
                     ret = true;
-                }    
+                }
             }
             return ret;
             //using (var conexao = new SqlConnection())

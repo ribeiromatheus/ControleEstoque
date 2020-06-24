@@ -1,7 +1,7 @@
-﻿using AutoMapper;
-using ControleEstoque.Web.Models;
+﻿using ControleEstoque.Web.Models;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.IO;
 using System.Linq;
 using System.Web;
@@ -48,6 +48,7 @@ namespace ControleEstoque.Web.Controllers
         public JsonResult RecuperarProduto(int id)
         {
             var vm = Mapper.Map<ProdutoViewModel>(ProdutoModel.RecuperarPeloId(id));
+
             return Json(vm);
         }
 
@@ -69,7 +70,10 @@ namespace ControleEstoque.Web.Controllers
         [HttpPost]
         [Authorize(Roles = "Gerente,Administrativo")]
         [ValidateAntiForgeryToken]
-        public JsonResult ExcluirProduto(int id) => Json(ProdutoModel.ExcluirPeloId(id));
+        public JsonResult ExcluirProduto(int id)
+        {
+            return Json(ProdutoModel.ExcluirPeloId(id));
+        }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -95,7 +99,7 @@ namespace ControleEstoque.Web.Controllers
                 nomeArquivoImagem = Guid.NewGuid().ToString() + ".jpg";
             }
 
-            var model = new ProdutoModel()
+            var vm = new ProdutoViewModel()
             {
                 Id = Int32.Parse(Request.Form["Id"]),
                 Codigo = Request.Form["Codigo"],
@@ -112,13 +116,34 @@ namespace ControleEstoque.Web.Controllers
                 Imagem = nomeArquivoImagem
             };
 
-            if (!ModelState.IsValid)
+            var context = new ValidationContext(vm);
+            var results = new List<ValidationResult>();
+            var valido = Validator.TryValidateObject(vm, context, results);
+
+            if (!valido)
             {
                 resultado = "AVISO";
-                mensagens = ModelState.Values.SelectMany(x => x.Errors).Select(x => x.ErrorMessage).ToList();
+                mensagens = results.Select(x => x.ErrorMessage).ToList();
             }
             else
             {
+                var model = new ProdutoModel()
+                {
+                    Id = vm.Id,
+                    Codigo = vm.Codigo,
+                    Nome = vm.Nome,
+                    PrecoCusto = vm.PrecoCusto,
+                    PrecoVenda = vm.PrecoVenda,
+                    QuantEstoque = vm.QuantEstoque,
+                    IdUnidadeMedida = vm.IdUnidadeMedida,
+                    IdGrupo = vm.IdGrupo,
+                    IdMarca = vm.IdMarca,
+                    IdFornecedor = vm.IdFornecedor,
+                    IdLocalArmazenamento = vm.IdLocalArmazenamento,
+                    Ativo = vm.Ativo,
+                    Imagem = vm.Imagem
+                };
+
                 try
                 {
                     var nomeArquivoImagemAnterior = "";

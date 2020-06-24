@@ -7,23 +7,19 @@ namespace ControleEstoque.Web.Models
     {
         public ProdutoMap()
         {
-            // Nome da tabela
             ToTable("produto");
 
-            // Chave primária e autoincremento
             HasKey(x => x.Id);
             Property(x => x.Id).HasColumnName("id").HasDatabaseGeneratedOption(DatabaseGeneratedOption.Identity);
 
-            // Dando nome aos campos
             Property(x => x.Codigo).HasColumnName("codigo").HasMaxLength(10).IsRequired();
             Property(x => x.Nome).HasColumnName("nome").HasMaxLength(50).IsRequired();
-            Property(x => x.PrecoCusto).HasColumnName("preco_custo").HasPrecision(7,2).IsRequired();
+            Property(x => x.PrecoCusto).HasColumnName("preco_custo").HasPrecision(7, 2).IsRequired();
             Property(x => x.PrecoVenda).HasColumnName("preco_venda").HasPrecision(7, 2).IsRequired();
             Property(x => x.QuantEstoque).HasColumnName("quant_estoque").IsRequired();
-            Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
             Property(x => x.Imagem).HasColumnName("imagem").HasMaxLength(100).IsRequired();
+            Property(x => x.Ativo).HasColumnName("ativo").IsRequired();
 
-            // Chave estrangeira
             Property(x => x.IdUnidadeMedida).HasColumnName("id_unidade_medida").IsRequired();
             HasRequired(x => x.UnidadeMedida).WithMany().HasForeignKey(x => x.IdUnidadeMedida).WillCascadeOnDelete(false);
 

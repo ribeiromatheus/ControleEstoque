@@ -1,7 +1,4 @@
 # Controle de Estoque
-**Sistema ERP de controle de estoque.**
-Nele você pode gerenciar seus usuários, produtos e relatórios.
-
 <p align="center">
   <img alt="GitHub language count" src="https://img.shields.io/github/languages/count/ribeiromatheus/ControleEstoque">
 
@@ -13,6 +10,9 @@ Nele você pode gerenciar seus usuários, produtos e relatórios.
 
   <img alt="Packagist" src="https://img.shields.io/badge/License-MIT-green.svg">
 </p>
+
+**Sistema ERP de controle de estoque.**
+Nele você pode gerenciar seus usuários, produtos e relatórios.
 
 ## Tecnologias
 - C#
@@ -126,6 +126,13 @@ Essa é a tela de Ressuprimento; aqui é onde você filtra uma **quantidade mín
 em seguida, um relatório é gerado e você poderá ver quais produtos serão necessário repor.
 
 ![image](https://user-images.githubusercontent.com/41703972/80527350-9b1b0780-896a-11ea-9dc6-b3fb6223b90c.png)
+
+
+### Gráficos
+#### Perdas por Mês
+Essa é a tela de Perdas por Mês; aqui é onde você visualiza um gráfico mostrando quantos produtos foram perdidos naquele mês (eixo Y) e o dia do mês (eixo X).
+
+![image](https://user-images.githubusercontent.com/41703972/86039971-a2699a80-ba19-11ea-9061-ca6a9a09ae5e.png)
 
 ## Bibliotecas e frameworks utilizados
 ### Backend

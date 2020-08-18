@@ -26,6 +26,7 @@ header, footer, nav, section {
     width: 300px;
     margin: 0 auto;
 }
+
 .titulo {
     margin-bottom: 30px;
     text-transform: uppercase;
@@ -106,4 +107,8 @@ body, .modal-open, .modal-open .navbar-fixed-top, .modal-open .navbar-fixed-bott
 
 #grid_cadastro thead tr th span {
     cursor: pointer;
+}
+
+#ddl_tam_pag_container .bootstrap-select {
+    width: 100%;
 }
